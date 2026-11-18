@@ -1,0 +1,25 @@
+{
+  "name": "opencode-adaptive-thinking",
+  "version": "1.0.0",
+  "description": "OpenCode v2 plugin that lets agents (main session and subagents) adjust their own reasoning effort, limited to the levels each model supports",
+  "homepage": "https://github.com/g-pelletier/opencode-adaptive-thinking#readme",
+  "bugs": {
+    "url": "https://github.com/g-pelletier/opencode-adaptive-thinking/issues"
+  },
+  "license": "MIT",
+  "author": "g-pelletier",
+  "contributors": [
+    "Ian Pascoe (original v1 plugin: https://github.com/ian-pascoe/opencode-adaptive-thinking)"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/g-pelletier/opencode-adaptive-thinking.git"
+  },
+  "keywords": ["opencode", "opencode-plugin", "reasoning", "thinking", "effort"],
+  "files": ["index.js", "README.md", "LICENSE"],
+  "type": "module",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  }
+}

@@ -139,13 +139,13 @@ export function createFakeCtx({
 export const tick = (ms = 10) => new Promise((resolve) => setTimeout(resolve, ms));
 
 // Calls the registered tool; returns the output string.
-export async function callTool(ctx, args, sessionID = "s1") {
+export async function callTool(ctx, args, sessionID = "s1", agent) {
   const def = ctx.tools.find((t) => t.name === "set_reasoning_effort");
-  const result = await def.execute(args, { sessionID });
+  const result = await def.execute(args, { sessionID, agent });
   return result.output;
 }
 
-export async function runContext(ctx, sessionID, model, system = []) {
-  await ctx.hooks.context({ sessionID, model, system });
+export async function runContext(ctx, sessionID, model, system = [], agent) {
+  await ctx.hooks.context({ sessionID, model, system, agent });
   return system;
 }

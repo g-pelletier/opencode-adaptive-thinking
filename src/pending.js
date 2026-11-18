@@ -33,12 +33,24 @@ export async function readPending(host, sessionID) {
 export const writePending = (host, sessionID, entry) => host.storage.set(PENDING_PREFIX + sessionID, entry);
 export const removePending = (host, sessionID) => host.storage.remove(PENDING_PREFIX + sessionID);
 
-// Live level list for a model. Throws if the catalog cannot be read.
-export async function catalogVariants(host, model) {
+// Live variant list for a model: [{ id, settings }], settings = provider request options the variant sets (or undefined).
+// Throws if the catalog cannot be read.
+export async function catalogEntries(host, model) {
   const list = await host.model.list();
   const catalog = Array.isArray(list?.data) ? list.data : Array.isArray(list) ? list : [];
   const found = catalog.find((m) => sameModel(m, model));
-  return Array.isArray(found?.variants) ? found.variants.map((v) => v.id).filter(Boolean) : [];
+  if (!Array.isArray(found?.variants)) return [];
+  return found.variants
+    .filter((v) => v?.id)
+    .map((v) => ({
+      id: v.id,
+      settings: v.settings && typeof v.settings === "object" && !Array.isArray(v.settings) ? v.settings : undefined,
+    }));
+}
+
+// Live level list for a model. Throws if the catalog cannot be read.
+export async function catalogVariants(host, model) {
+  return (await catalogEntries(host, model)).map((v) => v.id);
 }
 
 // level null means "model default": the variant key is omitted.

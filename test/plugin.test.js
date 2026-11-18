@@ -24,7 +24,7 @@ test("temporary change reverts at end of turn and guidance lists the levels", as
   await start(t, ctx);
   const system = await runContext(ctx, "s1", M1("low"));
   assert.match(system[0].text, /Current reasoning effort level: low\./);
-  assert.match(system[0].text, /Valid reasoning effort levels for this session: low, high, max\./);
+  assert.match(system[0].text, /Valid reasoning effort levels for this session \(ordered from lowest to highest effort\): low, high, max\./);
 
   const out = await callTool(ctx, { level: "high" });
   assert.match(out, /Reasoning effort set to high on p\/m1 \(reverts to low at end of turn\)\./);

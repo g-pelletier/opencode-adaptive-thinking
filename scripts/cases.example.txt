@@ -1,0 +1,12 @@
+# Live matrix cases for scripts/live-matrix.sh. One case per line:
+#   provider/model#start|bad|target|persist|expected-next
+#   start          variant the session starts on ("" = model default)
+#   bad            level that must be rejected ("-" = none)
+#   target         level the agent is asked to set
+#   persist        true | false
+#   expected-next  variant on the first context line of turn 2 ("default" = model default)
+# Blank lines and lines starting with # are ignored.
+
+example-provider/example-model#low|turbo|high|false|low
+example-provider/example-model#low|-|max|true|max
+example-provider/example-model#|-|high|false|default

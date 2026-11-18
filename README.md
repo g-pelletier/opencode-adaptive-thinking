@@ -217,12 +217,12 @@ The script prints one row per case and a count. It exits `1` if any case fails a
 ## Development
 
 ```sh
-npm test   # node:test, no dependencies (Node 20+)
+npm test   # node:test, no dependencies (Node 22+)
 ```
 
 ## Requirements
 
-OpenCode 2.x (tested on 2.3.0) with models that expose variants. Node 20+ for tests.
+OpenCode 2.x (tested on 2.3.0) with models that expose variants. Node 22+.
 
 ## License
 

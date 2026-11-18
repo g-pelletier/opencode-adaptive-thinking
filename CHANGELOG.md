@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.1 - 2026-11-18
+
+### Changed
+
+- Minimum Node.js version is now 22 (`engines`).
+
 ## 1.2.0
 
 - Level limits: `allowedLevels`, `maxLevel`, and per-agent `agents` overrides (`allowedLevels`, `maxLevel`, `enabled: false`). Guidance and the tool both use the effective list; a blocked level is reported as blocked by configuration.

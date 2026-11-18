@@ -12,7 +12,10 @@ It is a native v2 rewrite of [ian-pascoe/opencode-adaptive-thinking](https://git
   - `persist`: `true` keeps the level for the rest of the session. `false` (default) switches back when the turn ends.
 - Before every change, it reads the live model catalog and only applies a level the current model exposes. Models differ: for example `none, thinking` on one model, `high, max` on another.
 - Models without reasoning-effort levels get no guidance, and the tool answers `Not changed`.
-- If the session's model changes during a turn, a pending switch-back is dropped. The switch-back is also skipped if the original level no longer exists on the model.
+- Temporary changes are recorded in plugin storage before the switch, so they survive a plugin reload or a server restart.
+- A switch-back is skipped (and its record dropped) when the session's model or level changed since the plugin set it, for example a manual variant change or a provider fallback. The original level must also still exist on the model.
+- A `persist: true` call, or a shutdown interrupt, never reverts: after a restart the server resumes the turn at the level it had.
+- Calls for the same session are applied one at a time, so parallel tool calls cannot lose the original level.
 
 ## Install
 
@@ -57,12 +60,25 @@ Restart the OpenCode server.
 
 ## Limits
 
-- Session state is kept in memory. If the server restarts or the plugin reloads mid-turn, a temporary change is not switched back.
+- Pending switch-backs are stored per session. Records older than 7 days are dropped at startup instead of reverted.
+- A switch-back that fails to apply (host error) keeps its record and is retried at the next turn end or startup.
+- If the session is still busy when the server starts, its record is left in place and is only checked again when the turn ends.
+- Models without reasoning-effort levels get no guidance and the tool answers `Not changed`.
 - On some models the tool is only reachable through Code Mode (`tools.set_reasoning_effort`), like other plugin tools.
+
+## Storage
+
+The plugin keeps one record per session under the `pending/` key prefix in its own plugin storage. A record exists only while a temporary change is waiting to be reverted. Records hold the model reference and level names only; no prompt or message content is stored.
+
+## Development
+
+```sh
+npm test   # node:test, no dependencies (Node 20+)
+```
 
 ## Requirements
 
-OpenCode 2.x (tested on 2.3.0) with models that expose variants.
+OpenCode 2.x (tested on 2.3.0) with models that expose variants. Node 20+ for tests.
 
 ## License
 

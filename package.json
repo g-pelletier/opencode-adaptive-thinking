@@ -1,6 +1,6 @@
 {
   "name": "opencode-adaptive-thinking",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "OpenCode v2 plugin that lets agents (main session and subagents) adjust their own reasoning effort, limited to the levels each model supports",
   "homepage": "https://github.com/g-pelletier/opencode-adaptive-thinking#readme",
   "bugs": {
@@ -15,11 +15,29 @@
     "type": "git",
     "url": "git+https://github.com/g-pelletier/opencode-adaptive-thinking.git"
   },
-  "keywords": ["opencode", "opencode-plugin", "reasoning", "thinking", "effort"],
-  "files": ["index.js", "README.md", "LICENSE"],
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "reasoning",
+    "thinking",
+    "effort"
+  ],
+  "files": [
+    "index.js",
+    "src/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
   "type": "module",
   "main": "index.js",
   "exports": {
     ".": "./index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
   }
 }
